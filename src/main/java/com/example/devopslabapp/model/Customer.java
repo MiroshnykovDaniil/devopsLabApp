@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity(name = "customer")
 @Getter
@@ -31,5 +32,16 @@ public class Customer {
     private String lastName;
     private LocalDate birthDate;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id.equals(customer.id) && firstName.equals(customer.firstName) && lastName.equals(customer.lastName) && birthDate.equals(customer.birthDate);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, birthDate);
+    }
 }
