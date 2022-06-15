@@ -8,12 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.sql.Timestamp;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity(name = "customer")
@@ -31,6 +28,22 @@ public class Customer {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
+
+
+    private LocalDateTime created;
+    private LocalDateTime lastUpdated;
+
+
+    @PreUpdate
+    @PrePersist
+    public void updateTimeStamps() {
+        lastUpdated = LocalDateTime.now();
+        if (created==null) {
+            created = LocalDateTime.now();
+        }
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
